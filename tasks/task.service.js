@@ -17,7 +17,7 @@ async function getAll() {
 
 async function create(task) {
     const newtask = new Task({summary: task.summary, status:0});
-    await newtask.save();
+    return await newtask.save();
 }
 
 
