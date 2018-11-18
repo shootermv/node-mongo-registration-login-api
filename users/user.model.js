@@ -7,7 +7,8 @@ const schema = new Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     createdDate: { type: Date, default: Date.now },
-    role: { type: String, required: true }
+    role: { type: String, required: true },
+    tasks: [{ _id: Number, summary: String, status: Number }],
 });
 
 schema.set('toJSON', { virtuals: true });
