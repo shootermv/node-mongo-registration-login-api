@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('_helpers/db');
 const User = db.User;
+const Task = db.Task;
 
 module.exports = {
     authenticate,
@@ -10,7 +11,8 @@ module.exports = {
     getById,
     create,
     update,
-    delete: _delete
+    delete: _delete,
+    assignTask
 };
 
 async function authenticate({ username, password }) {
@@ -48,6 +50,15 @@ async function create(userParam) {
 
     // save user
     await user.save();
+}
+
+async function assignTask(user, task) {
+    const currentUser = await User.findById(user._id);
+    // add task to user list
+    currentUser.tasks.push(task);
+    // must remove task from unassigned tasks list
+    await Task.findByIdAndRemove(task._id);
+    return await currentUser.save();
 }
 
 async function update(id, userParam) {
