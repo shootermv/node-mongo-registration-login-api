@@ -91,6 +91,7 @@ async function changeStatus(user, task) {
     currentTask.status = task.status;
     // save
     await currentUser.save();
+    return currentTask;
 }
 
 async function _delete(id) {

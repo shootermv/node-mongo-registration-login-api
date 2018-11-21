@@ -65,6 +65,6 @@ function assign(req, res, next) {
 
 function changeStatus(req, res, next) {
     userService.changeStatus(req.body.user, req.body.task)
-        .then(() => res.json({}))
+        .then((task) => res.json(task))
         .catch(err => next(err));
 }    
