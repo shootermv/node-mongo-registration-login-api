@@ -12,7 +12,8 @@ module.exports = {
     create,
     update,
     delete: _delete,
-    assignTask
+    assignTask,
+    changeStatus
 };
 
 async function authenticate({ username, password }) {
@@ -79,6 +80,17 @@ async function update(id, userParam) {
     Object.assign(user, userParam);
 
     await user.save();
+}
+
+async function changeStatus(user, task) {
+   // find user by id
+    const currentUser = await User.findById(user._id);
+    // find task by id
+    const currentTask = currentUser.tasks.find(t => t._id === task._id);
+    // set the new status
+    currentTask.status = task.status;
+    // save
+    await currentUser.save();
 }
 
 async function _delete(id) {
