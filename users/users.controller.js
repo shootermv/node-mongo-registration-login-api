@@ -65,6 +65,9 @@ function assign(req, res, next) {
 
 function changeStatus(req, res, next) {
     userService.changeStatus(req.body.user, req.body.task)
-        .then((task) => res.json(task))
+        .then((task) => {
+            res.io.emit("FromAPI", "users"+ Math.random());
+            res.json(task);
+        })
         .catch(err => next(err));
 }    
