@@ -58,8 +58,12 @@ function _delete(req, res, next) {
 }
 
 function assign(req, res, next) {
-    userService.assignTask(req.body.user, req.body.task)
-        .then(() => res.json({}))
+    const {user, task} = req.body;
+    userService.assignTask(req.body.user, req.body.task)        
+        .then(() => {
+            res.io.emit("task-assigned", task);
+            res.json({});
+        })
         .catch(err => next(err));
 }
 
