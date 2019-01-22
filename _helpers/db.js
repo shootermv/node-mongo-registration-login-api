@@ -1,6 +1,10 @@
 const config = require('config.json');
+const dotenv = require('dotenv');
 const mongoose = require('mongoose');
-mongoose.connect(config.connectionString);
+
+dotenv.config();
+
+mongoose.connect(process.env.DB);
 mongoose.Promise = global.Promise;
 
 module.exports = {
